@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Love System Scanner</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: "Courier New", monospace;
+    }
+
+    body {
+      min-height: 100vh;
+      background: radial-gradient(circle at top, #142b1c, #020403 70%);
+      color: #7CFF7C;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 18px;
+      overflow: hidden;
+    }
+
+    .phone {
+      width: 100%;
+      max-width: 420px;
+      min-height: 640px;
+      border: 2px solid #1cff70;
+      border-radius: 26px;
+      box-shadow: 0 0 25px rgba(0, 255, 100, 0.35);
+      padding: 22px;
+      background: rgba(0, 0, 0, 0.72);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .scanline {
+      position: absolute;
+      left: 0;
+      top: -100px;
+      width: 100%;
+      height: 90px;
+      background: linear-gradient(to bottom, transparent, rgba(124, 255, 124, 0.18), transparent);
+      animation: scan 3s linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes scan {
+      0% { top: -100px; }
+      100% { top: 100%; }
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 22px;
+    }
+
+    .header h1 {
+      font-size: 22px;
+      margin-bottom: 8px;
+      text-shadow: 0 0 12px #1cff70;
+    }
+
+    .header p {
+      font-size: 13px;
+      color: #b9ffb9;
+    }
+
+    .terminal {
+      border: 1px solid rgba(124, 255, 124, 0.5);
+      border-radius: 16px;
+      padding: 16px;
+      min-height: 360px;
+      background: rgba(0, 20, 7, 0.8);
+      font-size: 14px;
+      line-height: 1.7;
+      white-space: pre-line;
+    }
+
+    .button {
+      width: 100%;
+      margin-top: 18px;
+      padding: 15px;
+      border: none;
+      border-radius: 16px;
+      background: #1cff70;
+      color: #001b09;
+      font-weight: bold;
+      font-size: 15px;
+      cursor: pointer;
+      box-shadow: 0 0 16px rgba(28, 255, 112, 0.45);
+    }
+
+    .button:active {
+      transform: scale(0.97);
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .result {
+      text-align: center;
+      color: #fff;
+      margin-top: 22px;
+      animation: fadeIn 1s ease forwards;
+    }
+
+    .result h2 {
+      color: #ff8fd8;
+      font-size: 24px;
+      margin-bottom: 14px;
+      text-shadow: 0 0 14px rgba(255, 143, 216, 0.7);
+    }
+
+    .result p {
+      color: #f3fff3;
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      font-size: 15px;
+    }
+
+    .heart {
+      font-size: 42px;
+      margin: 14px 0;
+      animation: pulse 1.2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.18); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .small {
+      margin-top: 15px;
+      font-size: 12px;
+      color: #aaffaa;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="phone">
+    <div class="scanline"></div>
+
+    <div class="header">
+      <h1>LOVE SYSTEM v1.0</h1>
+      <p>Program rahasia pendeteksi perasaan</p>
+    </div>
+
+    <div id="terminal" class="terminal">
+Klik tombol di bawah untuk mulai scan.
+Pastikan target tidak kabur, ngambek, atau pura-pura sibuk.
+    </div>
+
+    <button id="startBtn" class="button">MULAI SCAN PERASAAN</button>
+
+    <div id="result" class="result hidden">
+      <h2>SCAN SELESAI</h2>
+      <div class="heart">💚</div>
+      <p>
+        Hasil sistem menunjukkan bahwa kamu adalah orang yang cukup ngeselin,
+        kadang bikin pusing, suka muncul di pikiran tanpa izin,
+        dan parahnya... tetap jadi favorit aku.
+      </p>
+      <br />
+      <p>
+        Status akhir: <b>TERLALU SAYANG UNTUK DI-UNINSTALL.</b>
+      </p>
+    </div>
+
+    <p class="small">© Sistem ini tidak bisa dibantah. Kalau protes berarti makin lucu.</p>
+  </div>
+
+  <script>
+    const terminal = document.getElementById("terminal");
+    const startBtn = document.getElementById("startBtn");
+    const result = document.getElementById("result");
+
+    const lines = [
+      "Initializing system...",
+      "Mencari sinyal baper...",
+      "Sinyal ditemukan: 99.9%",
+      "Memindai tingkat ngeselin...",
+      "WARNING: Target sering bikin kangen.",
+      "Mengecek riwayat senyum gara-gara dia...",
+      "Data terlalu banyak. HP hampir meledak.",
+      "Scanning chat behavior...",
+      "ERROR: Kadang bikin salting sendiri.",
+      "Menghitung probabilitas ditinggal...",
+      "0%. Sistem menolak skenario itu.",
+      "Finalizing result...",
+      "ACCESS GRANTED ❤️"
+    ];
+
+    startBtn.addEventListener("click", () => {
+      startBtn.classList.add("hidden");
+      terminal.textContent = "";
+      result.classList.add("hidden");
+
+      let index = 0;
+      const interval = setInterval(() => {
+        terminal.textContent += lines[index] + "\n";
+        index++;
+
+        if (index === lines.length) {
+          clearInterval(interval);
+          setTimeout(() => {
+            result.classList.remove("hidden");
+          }, 700);
+        }
+      }, 700);
+    });
+  </script>
+</body>
+</html>
